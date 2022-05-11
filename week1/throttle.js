@@ -4,67 +4,70 @@
  * @param wait
  * @param options leading：false  trailing:false
  */
-// function throttle(func,wait,options){
-//     let timer;
-//
-//     const throttleFunc = function (){
-//         const context = this;
-//
-//         if(!timer) {
-//             console.log('execute');
-//             timer = setTimeout(() => {
-//                 console.log('execute===');
-//                 timer = null;
-//                 func.apply(context, arguments);
-//             }, wait)
-//         }
-//     }
-//
-//     throttleFunc.cancel = ()=>{
-//         clearTimeout(timer);
-//         timer = null
-//     }
-//
-//     return throttleFunc;
-// }
+function throttle(func, wait, options){
+    let previous = 0;
+    let result;
+    let timer;
+    if (!options) options = {};
 
-// 第二版
-function throttle(func, wait) {
-    var timeout;
-    var previous = 0;
 
-    return function() {
-        context = this;
-        args = arguments;
-        if (!timeout) {
-            timeout = setTimeout(function(){
-                timeout = null;
-                func.apply(context, args)
-            }, wait)
+    const throttleFunc = function (){
+        const context = this;
+        const current = +new Date();
+
+        if(options.leading === true && previous === 0){
+            console.log('leading',options)
+            result = func.apply(context, arguments);
+            previous = current;
+            return result;
         }
 
+        if(options.trailing === true){
+            clearTimeout(timer);
+            timer = setTimeout(()=>{
+                console.log('throttleFunc.getRemainTime(current)',throttleFunc.getRemainTime(current))
+                func.apply(context, arguments);
+            }, throttleFunc.getRemainTime(current))
+        }
+
+        if(current - previous > wait){
+            result = func.apply(context, arguments);
+            previous = current;
+            return result;
+        }
     }
+
+    throttleFunc.getRemainTime = (current)=>{
+        if(!previous){
+            return wait;
+        }
+
+        return wait - (current - previous )
+    }
+
+    throttleFunc.cancel = ()=>{
+        previous = undefined;
+    }
+
+    return throttleFunc;
 }
 
+// import loadsh from "loadsh/function.js";
+//
+// const { throttle } = loadsh;
+
 function log(...args){
-    console.log(`date: ${args}\nthis: ${this.name}`);
+
+    console.log(`date: ${args}\nthis: ${this}`);
     return new Date();
 }
 
-const throttleFuc = throttle(log,1);
+
+const throttleFuc = throttle(log,2,{leading:false});
 
 // log(1,2,3);
 
 let j = 0;
-for (let i = 0; i < 1; i++) {
+for (let i = 0; i < 30000; i++) {
     throttleFuc(1,2,3);
-    // const nowTime = + new Date();
-    // while (nowTime + 5 > +new Date()){
-    // }
-
-    // if(i % 1000 === 0){
-    //     j += 1;
-    //     throttleFuc.cancel();
-    //     console.log('取消次数',j);
-    // }
 }
