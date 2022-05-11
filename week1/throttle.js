@@ -27,6 +27,7 @@ function throttle(func, wait, options){
             timer = setTimeout(()=>{
                 console.log('throttleFunc.getRemainTime(current)',throttleFunc.getRemainTime(current))
                 func.apply(context, arguments);
+                timer = null;
             }, throttleFunc.getRemainTime(current))
         }
 
@@ -47,6 +48,8 @@ function throttle(func, wait, options){
 
     throttleFunc.cancel = ()=>{
         previous = undefined;
+        clearTimeout(timer);
+        timer = null;
     }
 
     return throttleFunc;
