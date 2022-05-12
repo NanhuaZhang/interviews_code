@@ -11,6 +11,8 @@ function quickSort(start,end,sortArray){
         return;
     }
     const mid = sort(start,end,sortArray);
+    console.log('sortArray',sortArray);
+
     quickSort(start,mid-1,sortArray);
     quickSort(mid+1,end,sortArray);
 }
