@@ -6,32 +6,33 @@ function sortArray(arrs){
     return [];
 }
 
-function quickSort(start,end,sortArray){
-    if(start>end){
+function quickSort(start,end,arrs){
+    if(start > end){
         return;
     }
-    const mid = sort(start,end,sortArray);
-    console.log('sortArray',sortArray);
 
-    quickSort(start,mid-1,sortArray);
-    quickSort(mid+1,end,sortArray);
+    const mid = sort(start,end,arrs);
+
+    quickSort(start,mid-1,arrs);
+    quickSort(mid+1,end,arrs);
 }
 
-function sort(left, right, arr) {
-    const base = arr[left];
+function sort(left,right,arrs){
+    const base = arrs[left];
 
-    while (left < right){
-        while (arr[right] >= base && right > left){
-            right --;
+    while (left <right){
+        while (arrs[right] >=base && right>left){
+            right--;
         }
-        arr[left] = arr[right];
+        arrs[left] = arrs[right];
 
-        while (arr[left] <= base && right > left){
-            left ++;
+        while (arrs[left] <= base && right>left){
+            left++
         }
-        arr[right] = arr[left]
+        arrs[right] = arrs[left];
     }
-    arr[left] = base;
+
+    arrs[left] = base;
 
     return left;
 }
