@@ -57,7 +57,7 @@ function deepClone(target, map = new WeakMap()){
         const keys = Object.keys(target);
         while (i < keys.length){
             const key = keys[i];
-            targetElement[key] = deepClone(target[key]);
+            targetElement[key] = deepClone(target[key],map);
             i++;
         }
 

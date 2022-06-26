@@ -150,23 +150,42 @@ function resolvePromise(x,myPromise2,resolve,reject){
 }
 
 
+const reject = async ()=>{
+    return new MyPromise((resolve,reject)=>{reject(1);console.log(222)})
+}
 
-MyPromise.resolve().then(() => {
-    console.log(0);
-    return MyPromise.resolve(4);
-}).then((res) => {
-    console.log(res)
-})
+try {
+    console.log(await reject())
+}catch (e){
+    console.log(e)
+}
 
-MyPromise.resolve().then(() => {
-    console.log(1);
-}).then(() => {
-    console.log(2);
-}).then(() => {
-    console.log(3);
-}).then(() => {
-    console.log(5);
-}).then(() =>{
-    console.log(6);
-})
+
+// MyPromise.resolve().then(() => {
+//     console.log(0);
+//     return MyPromise.resolve(4);
+// }).then((res) => {
+//     console.log(res)
+// })
+//
+// MyPromise.resolve().then(() => {
+//     console.log(1);
+// }).then(() => {
+//     console.log(2);
+// }).then(() => {
+//     console.log(3);
+// }).then(() => {
+//     console.log(5);
+// }).then(() =>{
+//     console.log(6);
+// })
+
+
+// const arr = [1, 2, 3];
+//
+// arr.reduce((pre, cur) => {
+//     return pre.then(() => {
+//         return new MyPromise((resolve) => setTimeout(() => resolve(console.log(cur)), 1000))
+//     })
+// }, MyPromise.resolve())
 
