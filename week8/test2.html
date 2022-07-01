@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+
+<script>
+    let timer = 0;
+    let start = Date.now();
+    let position = {clientX: 0, clientY: 0};
+
+    const showDom = document.createElement('div');
+    showDom.innerText = `${Math.floor(timer/1000)}s`;
+    document.body.append(showDom);
+
+    document.addEventListener('mousemove', (event) => {
+        const end = Date.now();
+        const {clientX, clientY} = event;
+
+        if (clientX === position.clientX && clientY === position.clientY) {
+            start = end;
+            position = {clientX,clientY}
+            return;
+        }
+
+        position = {clientX,clientY}
+        timer += end - start;
+        showDom.innerText = `${Math.floor(timer/1000)}s`;
+        start = end;
+    })
+
+
+</script>
+</html>

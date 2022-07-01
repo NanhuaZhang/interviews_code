@@ -1,0 +1,64 @@
+<style>
+    .active-dom:focus {
+        border: 1px solid yellow;
+    }
+</style>
+
+<div id="container"></div>
+<script>
+    const layers = [
+        {
+            id: 1,
+            x: 50,
+            y: 50,
+            width: 200,
+            height: 200,
+            color: 'rgb(255, 142, 79, 0.8)',
+        },
+        {
+            id: 2,
+            x: 80,
+            y: 40,
+            width: 250,
+            height: 250,
+            color: 'rgb(17, 65, 26, 0.8)',
+        },
+        {
+            id: 3,
+            x: 400,
+            y: 560,
+            width: 320,
+            height: 120,
+            color: 'rgb(196, 60, 207, 0.8)',
+        },
+        {
+            id: 4,
+            x: 460,
+            y: 200,
+            width: 320,
+            height: 320,
+            color: 'rgb(198, 24, 0, 0.8)',
+        },
+        {
+            id: 5,
+            x: 380,
+            y: 220,
+            width: 200,
+            height: 380,
+            color: 'rgb(19, 147, 149, 0.8)',
+        },
+    ];
+</script>
+
+<script>
+    const containerDom = document.getElementById('container');
+    layers.forEach(layer => {
+        const dom = document.createElement('div');
+        dom.id = layer.id;
+        dom.style.cssText = `width:${layer.width};height:${layer.height};background-color:${layer.color};top:${layer.y};left:${layer.x};position:absolute`;
+        dom.className = 'active-dom'
+        dom.tabIndex = 0;
+
+        containerDom.appendChild(dom);
+    })
+</script>
